@@ -1,0 +1,9 @@
+See http://joekuan.wordpress.com/2011/03/14/extending-extjs-crud-operations-on-id-and-baseparams/
+
+Make a backup of the original ExtJS CRUD's lib/request.php
+and replace the file
+
+Please let me know if you have found any problems.
+
+Thanks
+kuan.joe@gmail.com
