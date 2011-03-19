@@ -49,14 +49,19 @@ class Request {
         }
 
         // Pack everything else in $params (except data) to Request->params->baseParams 
-	if (count(get_object_vars($params)) > 1) {
-	  $this->params->baseParams = new stdClass();
-	  foreach ((array) get_object_vars($params) as $name => $value) {
-            if ($name == 'data')
-	      continue;
-              $this->params->baseParams->$name = $value;
-	  }
-	}
+        // Under update and create actions, $this->params is an object because the 
+        // action can contain multiple values
+        // The destroy action, $this->params contain a single value - id which is also
+        // assigned to $this->id. 
+        if (is_scalar($this->params)) {
+          $this->params = new stdClass();
+        }
+        $this->params->baseParams = new stdClass();
+        foreach ((array) get_object_vars($params) as $name => $value) {
+          if ($name == 'data')
+            continue;
+          $this->params->baseParams->$name = $value;
+        }
 
         // Quickndirty PATH_INFO parser
         if (isset($_SERVER["PATH_INFO"])){
